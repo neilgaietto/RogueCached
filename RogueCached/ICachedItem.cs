@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace RogueCached
 {
-    [Serializable]
-    public class Entity<T>
+    public interface ICachedItem
     {
-
+        string Key { get; set; }
     }
 }
