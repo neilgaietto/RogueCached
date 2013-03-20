@@ -9,5 +9,6 @@ namespace RogueCached
     public interface ICachedItem
     {
         string Key { get; set; }
+        DateTime LastUpdate { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Web.Caching;
 namespace RogueCached
 {
     [Serializable]
-    public abstract class CachedRepository<T> : ICachedRepository<T>// where T : class, new()
+    public abstract class CachedRepository<T> : ICachedRepository<T> where T: ICachedItem// where T : class, new()
     {
         public string Key { get; set; }
         private Cache Context;// = new T();
