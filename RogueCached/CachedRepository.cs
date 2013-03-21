@@ -11,62 +11,62 @@ using System.Web.Caching;
 namespace RogueCached
 {
     [Serializable]
-    public abstract class CachedRepository<T> : ICachedRepository<T> where T: ICachedItem// where T : class, new()
+    public class CachedRepository<T> : ICachedRepository<T> where T: ICachedItem// where T : class, new()
     {
         public string Key { get; set; }
-        private Cache Context;// = new T();
+        private Cache Context { get; set; }
+        private Dictionary<string, T> DataCollection { get; set; }
 
-
-        protected CachedRepository(string key, Cache context)
+        public CachedRepository(string key, Cache cacheContext)
         {
             Key = key;
-            Context = context;
-        }
+            Context = cacheContext;
+            DataCollection = Context[Key] as Dictionary<string, T>;
+            if (DataCollection == null)
+            {
+                DataCollection = new Dictionary<string, T>();
+            }
 
-        //protected CachedRepository(string key)
-        //{
-        //    CachedRepository(key, HttpRuntime.Cache);
-        //}
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Type ElementType
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public Expression Expression
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IQueryProvider Provider
-        {
-            get { throw new NotImplementedException(); }
         }
 
         public void Add(T entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public T Get(string id)
-        {
-            throw new NotImplementedException();
+            DataCollection.Add(entity.Key, entity);
         }
 
         public void Remove(T entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) { return; }
+            DataCollection.Remove(entity.Key);
         }
 
+        public void Save()
+        {
+            Context[Key] = DataCollection;
+        }
+
+        public T Get(string id)
+        {
+            return DataCollection[id];
+        }
+
+        public IQueryable<T> Query(Expression<Func<T, bool>> filter = null)
+        {
+
+            IQueryable<T> query = DataCollection.Values.AsQueryable();
+            if (filter != null)
+                query = query.Where(filter);
+            return query;
+        }
+
+        public T SingleOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return DataCollection.Values.AsQueryable().SingleOrDefault(predicate);
+        }
+
+        public int Count(Expression<Func<T, bool>> filter = null)
+        {
+            return Query(filter).Count();
+        }
     }
 }

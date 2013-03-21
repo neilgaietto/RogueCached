@@ -8,12 +8,11 @@ using System.Web.Caching;
 
 namespace RogueCached.Test.TestObjects
 {
-    public class DummyDataRepository : CachedRepository<DummyData>
+    public class DummyDataRepository //: CachedRepository<DummyData>
     {
-        public DummyDataRepository(string key, Cache context)
-            : base(key, context)
+        public DummyDataRepository()
         {
-
         }
+           
     }
 }
