@@ -24,10 +24,6 @@ namespace RogueCached
          * MemoryTimelimit - The time it can sit it memory before it is unloaded. The next time it is called it can reload into memory from the file.
          * Expires - The time before both memory and file cache are removed.
          * 
-         * Functions to add:(child class)
-         * Refresh()
-         * Build()
-         * 
          */
     }
 }

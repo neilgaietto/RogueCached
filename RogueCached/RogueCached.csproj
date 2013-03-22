@@ -43,6 +43,9 @@
     <Compile Include="CachedFile.cs" />
     <Compile Include="CachedRepository.cs" />
     <Compile Include="CachedFileAccess.cs" />
+    <Compile Include="DataAccess\BaseChainedDataAccess.cs" />
+    <Compile Include="DataAccess\CacheAccess.cs" />
+    <Compile Include="DataAccess\IChainedDataAccess.cs" />
     <Compile Include="ICachedItem.cs" />
     <Compile Include="ICachedRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
