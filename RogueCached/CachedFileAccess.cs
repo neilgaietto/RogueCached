@@ -8,21 +8,26 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace RogueCached
 {
-    public class FileAccess
+    public class CachedFileAccess
     {
         
-        public string CacheDirectory { get; set; }
-        private const string _EXTENTION = ".rcached";
 
-        public string WriteCache(string key, object obj)
+        public const string EXTENTION = ".rcached";
+
+        public static string WriteCache<T>(CachedFile<T> data, string cacheDirectory)
         {
-            byte[] bin = ObjectToByteArray(obj);
-            string path = GetCacheFilePath(key);
+            
+            byte[] bin = ObjectToByteArray(data);
+            string path = GetCacheFilePath(data.Key, cacheDirectory);
             CheckForPath(path);
+            WriteToStorage(bin, path);
             return path;
         }
-
-        public string GetCacheFilePath(string key)
+        public static CachedFile<T> ReadCache<T>(string key)
+        {
+            return default(CachedFile<T>);
+        }
+        public static string GetCacheFilePath(string key, string cacheDirectory)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -33,9 +38,9 @@ namespace RogueCached
                 throw new Exception(String.Format("The Key can only contain characters that are valid for a file path ({0})", key)); 
             }
 
-            return CacheDirectory + key + _EXTENTION;
+            return cacheDirectory + key + EXTENTION;
         }
-        public void CheckForPath(string path)
+        public static void CheckForPath(string path)
         {
             try
             {
@@ -63,6 +68,19 @@ namespace RogueCached
             obj = null;
 
             return ms.ToArray();
+        }
+        public static void WriteToStorage(byte[] value, string filelocation)
+        {
+            try
+            {
+                File.WriteAllBytes(filelocation, value);
+
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
     }
 }

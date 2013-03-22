@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CachedFile.cs" />
     <Compile Include="CachedRepository.cs" />
-    <Compile Include="FileAccess.cs" />
+    <Compile Include="CachedFileAccess.cs" />
     <Compile Include="ICachedItem.cs" />
     <Compile Include="ICachedRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

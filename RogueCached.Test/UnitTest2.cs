@@ -7,7 +7,7 @@ namespace RogueCached.Test
     public class UnitTest2
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestCount()
         {
             //RogueCached.CachedRepository<TestObjects.DummyData> testRep = new RogueCached.CachedRepository<TestObjects.DummyData>("dummydata", System.Web.HttpRuntime.Cache);
             //TestObjects.DummyDataRepository dd = new TestObjects.DummyDataRepository("dummydata", System.Web.HttpRuntime.Cache);

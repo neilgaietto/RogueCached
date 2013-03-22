@@ -22,32 +22,40 @@ namespace RogueCached
             Key = key;
             Context = cacheContext;
             DataCollection = Context[Key] as Dictionary<string, T>;
+
+            if (DataCollection != null)
+            {
+                //remove expired
+            }
             if (DataCollection == null)
             {
+                //create empty collection
                 DataCollection = new Dictionary<string, T>();
             }
 
         }
 
+
+        // Adds or Updates
         public void Add(T entity)
         {
             DataCollection.Add(entity.Key, entity);
         }
 
-        public void Remove(T entity)
+        public void Remove(string key)
         {
-            if (entity == null) { return; }
-            DataCollection.Remove(entity.Key);
+            if (key == null) { return; }
+            DataCollection.Remove(key);
         }
 
-        public void Save()
+        public void Save(DateTime expiresAt)
         {
             Context[Key] = DataCollection;
         }
 
-        public T Get(string id)
+        public T Get(string key)
         {
-            return DataCollection[id];
+            return DataCollection[key];
         }
 
         public IQueryable<T> Query(Expression<Func<T, bool>> filter = null)
@@ -68,5 +76,7 @@ namespace RogueCached
         {
             return Query(filter).Count();
         }
+
+
     }
 }
