@@ -14,5 +14,6 @@ namespace RogueCached.Test.TestObjects
 
         public string Key { get; set; }
         public DateTime LastUpdate { get; set; }
+        public DummyData() { }
     }
 }

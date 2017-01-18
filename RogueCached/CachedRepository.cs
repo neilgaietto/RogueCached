@@ -40,18 +40,17 @@ namespace RogueCached
         public void Add(T entity)
         {
             DataCollection.Add(entity.Key, entity);
+            Context[Key] = DataCollection;
         }
 
         public void Remove(string key)
         {
             if (key == null) { return; }
             DataCollection.Remove(key);
-        }
-
-        public void Save(DateTime expiresAt)
-        {
             Context[Key] = DataCollection;
         }
+
+        
 
         public T Get(string key)
         {

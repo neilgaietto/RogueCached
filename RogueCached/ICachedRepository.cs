@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace RogueCached
 {
-    public interface ICachedRepository<T>// : IQueryable<T>
+    public interface ICachedRepository<T> // : IQueryable<T>
     {
         string Key { get; set; }
         void Add(T entity);
         void Remove(string key);
         T Get(string key);
-        void Save(DateTime expiresAt);
         int Count(Expression<Func<T, bool>> filter = null);
         IQueryable<T> Query(Expression<Func<T, bool>> filter = null);
         T SingleOrDefault(Expression<Func<T, bool>> predicate);
